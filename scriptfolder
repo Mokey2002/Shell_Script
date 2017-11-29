@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+
+date=$(date)
+#get the topic
+
+topic="$1"
+#filename
+
+filename="${HOME}/${topic}notes.txt"
+
+#Ask user for input
+read -p "YOur note: " note
+
+
+if [[ $note ]]; then
+		echo "$date: $note">>"$filename"
+		echo Note "$note" saved to $filename
+else
+		echo "No input; note wasnt saved." 1>&2
+fi
