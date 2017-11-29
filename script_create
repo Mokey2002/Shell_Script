@@ -1,0 +1,58 @@
+#!/bin/bash
+
+#create_script
+#This script creates a new bash script, sets #permissions and more
+
+#is there an argument?
+
+
+if [[ ! $1 ]]; then
+		echo "Missing argument"
+		exit 1
+fi
+
+
+scriptname="$1"
+bindir="${HOME}/bin"
+filename="${bindir}/${scriptname}"
+
+if [[ -e $filename ]]; then
+		echo "File ${filename} already exists"
+		exit 1
+fi
+
+if type "$scriptname" > /dev/null 2>&1; then
+		echo "there is already a command with name ${scriptname}"
+		exit 1
+fi
+#Check bin direcotry exists
+
+if [[ ! -d $bindir ]]; then
+  #if not ; create bin direcotry
+		if mkdir "$bindir"; then
+				echo "created ${bindir}"
+		else
+				echo "Could not create ${bindir}"
+				exit 1
+		fi
+fi
+
+#create a script with a slingle line
+echo "#!/bin/bash" > "$filename"
+#Add executable permission
+chmod u+x "$filename"
+#open wiht editor
+
+
+if [[ $EDITOR ]];then
+  $EDITOR "$filename"
+else
+  echo "SCRIPT CREATED; not starting edit becison \$EDITOR IS NOT SET"
+fi
+
+echo "End of code reached"
+exit 0
+
+
+
+
